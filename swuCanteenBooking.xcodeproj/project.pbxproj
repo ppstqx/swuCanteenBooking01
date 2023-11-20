@@ -14,6 +14,12 @@
 		001EE8FD2B08EFFD0074C827 /* swuCanteenBookingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE8FC2B08EFFD0074C827 /* swuCanteenBookingTests.swift */; };
 		001EE9072B08EFFD0074C827 /* swuCanteenBookingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE9062B08EFFD0074C827 /* swuCanteenBookingUITests.swift */; };
 		001EE9092B08EFFD0074C827 /* swuCanteenBookingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE9082B08EFFD0074C827 /* swuCanteenBookingUITestsLaunchTests.swift */; };
+		001EE9162B08F00C0074C827 /* Tabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE9152B08F00C0074C827 /* Tabbar.swift */; };
+		001EE9182B08F01A0074C827 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE9172B08F01A0074C827 /* HomeView.swift */; };
+		001EE91A2B08F0290074C827 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE9192B08F0290074C827 /* BookmarkView.swift */; };
+		001EE91C2B08F0340074C827 /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE91B2B08F0340074C827 /* BookingView.swift */; };
+		001EE91E2B08F2730074C827 /* ListingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE91D2B08F2730074C827 /* ListingItemView.swift */; };
+		001EE9202B091A340074C827 /* TableSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001EE91F2B091A340074C827 /* TableSelectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,12 @@
 		001EE9022B08EFFD0074C827 /* swuCanteenBookingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swuCanteenBookingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		001EE9062B08EFFD0074C827 /* swuCanteenBookingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swuCanteenBookingUITests.swift; sourceTree = "<group>"; };
 		001EE9082B08EFFD0074C827 /* swuCanteenBookingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swuCanteenBookingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		001EE9152B08F00C0074C827 /* Tabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabbar.swift; sourceTree = "<group>"; };
+		001EE9172B08F01A0074C827 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		001EE9192B08F0290074C827 /* BookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
+		001EE91B2B08F0340074C827 /* BookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingView.swift; sourceTree = "<group>"; };
+		001EE91D2B08F2730074C827 /* ListingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingItemView.swift; sourceTree = "<group>"; };
+		001EE91F2B091A340074C827 /* TableSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSelectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +107,12 @@
 			isa = PBXGroup;
 			children = (
 				001EE8EB2B08EFFB0074C827 /* swuCanteenBookingApp.swift */,
+				001EE9152B08F00C0074C827 /* Tabbar.swift */,
+				001EE9172B08F01A0074C827 /* HomeView.swift */,
+				001EE91D2B08F2730074C827 /* ListingItemView.swift */,
+				001EE9192B08F0290074C827 /* BookmarkView.swift */,
+				001EE91B2B08F0340074C827 /* BookingView.swift */,
+				001EE91F2B091A340074C827 /* TableSelectionView.swift */,
 				001EE8ED2B08EFFB0074C827 /* ContentView.swift */,
 				001EE8EF2B08EFFD0074C827 /* Assets.xcassets */,
 				001EE8F12B08EFFD0074C827 /* Preview Content */,
@@ -257,6 +275,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				001EE91C2B08F0340074C827 /* BookingView.swift in Sources */,
+				001EE91E2B08F2730074C827 /* ListingItemView.swift in Sources */,
+				001EE9162B08F00C0074C827 /* Tabbar.swift in Sources */,
+				001EE91A2B08F0290074C827 /* BookmarkView.swift in Sources */,
+				001EE9202B091A340074C827 /* TableSelectionView.swift in Sources */,
+				001EE9182B08F01A0074C827 /* HomeView.swift in Sources */,
 				001EE8EE2B08EFFB0074C827 /* ContentView.swift in Sources */,
 				001EE8EC2B08EFFB0074C827 /* swuCanteenBookingApp.swift in Sources */,
 			);
