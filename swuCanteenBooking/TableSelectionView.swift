@@ -6,36 +6,57 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
 
 struct TableSelectionView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var bookingViewModel = BookingViewModel()
+
+
+    let canteenData: CanteenData
     
-    @State var bookedTable: [Int] = [1,12,15,25,32,39]
+    @Binding var userId: String
+
+    @State var bookedTable: [Int] = []
     @State var selectedTable : [Int] = []
-    
+
     @State var date: Date = Date()
-    @State var selectedTime = "11.30"
-    var time = ["11:30","11:55","12:20","12:45","13:05","13.30"]
+    @State var selectedTime = ""
 
- 
-    var body: some View {                    
-                    HStack {
-                        Button(action: {}, label: {
-                            Image(systemName: "chevron.left")
-                                .font(.title2)
-                                .foregroundColor(.black)
-                                .fontWeight(.medium)
 
-                        })
-                        
-                        
-                        Spacer()
-                        Button(action: {}, label: {
-                            Image(systemName: "bookmark")
-                                .font(.title2)
-                                .foregroundColor(.black)
-                                .fontWeight(.medium)
-                        })
-                    }
+
+    init(canteenData: CanteenData, userId: Binding<String>) {
+         self.canteenData = canteenData
+         self._userId = userId
+     }
+    
+    var body: some View {
+
+        VStack {
+        HStack {
+            Button(action: {
+                               presentationMode.wrappedValue.dismiss()
+                           }, label: {
+                               Image(systemName: "chevron.left")
+                                   .font(.title2)
+                                   .foregroundColor(.black)
+                                   .fontWeight(.medium)
+                           })
+            
+            Spacer()
+            Button(action: {
+                
+            }, label: {
+                Image(systemName: "bookmark")
+                    .font(.title2)
+                    .foregroundColor(.black)
+                    .fontWeight(.medium)
+            })
+        }
+    }
                     .overlay(
                         Text("Select Table")
                             .font(.title2)
@@ -43,10 +64,11 @@ struct TableSelectionView: View {
                         
                     )
                     .padding()
+        
                     
                     // Table
-                    let totalTable = 35 + 5
-                    
+            let totalTable = canteenData.tableCount // Use canteenData.tableCount directly
+
                     // Move these lines outside the ScrollView
                     let leftSide = 0..<totalTable/2
                     let rightSide = totalTable/2..<totalTable
@@ -63,10 +85,10 @@ struct TableSelectionView: View {
                                 
                                 let table = index + 1
 
-                                tableView(index: index, table: table, selectedTable: $selectedTable, bookedTable: $bookedTable)
+                                tableView(index: index, table: table, canteenData: canteenData, selectedTable: $selectedTable, bookedTable: $bookedTable)
                                     .contentShape(Rectangle())
                                     .onTapGesture {
-//                                    print(table)
+                                    print(table)
                                         if selectedTable.contains(table) {
                                             selectedTable.removeAll { (removeTable) -> Bool in
                                                 return removeTable == table
@@ -87,9 +109,10 @@ struct TableSelectionView: View {
                                 
                                 let table = index + 1
                                 
-                                tableView(index: index, table: table, selectedTable: $selectedTable, bookedTable: $bookedTable)                                    .contentShape(Rectangle())
+                                tableView(index: index, table: table, canteenData: canteenData, selectedTable: $selectedTable, bookedTable: $bookedTable)
+                                    .contentShape(Rectangle())
                                     .onTapGesture {
-                                        //                                    print(table)
+                                                                            print(table)
                                         
                                         if selectedTable.contains(table) {
                                             selectedTable.removeAll { (removeTable) -> Bool in
@@ -151,7 +174,7 @@ struct TableSelectionView: View {
                     .offset(x: -3)
 
             }
-              .padding(.vertical, 10)  // Adjust the vertical padding value here
+              .padding(.vertical, 10)
               .padding(.horizontal,5)
 
             
@@ -170,7 +193,7 @@ struct TableSelectionView: View {
                     .labelsHidden()
             }
             .padding()
-            
+              let time = canteenData.time
             ScrollView(.horizontal, showsIndicators:false,content: {
                 HStack(spacing: 15) {
                     ForEach(time,id:\ .self) {timing in
@@ -192,7 +215,10 @@ struct TableSelectionView: View {
             })
             
             HStack{
-                Button(action: {}, label :{
+                Button(action: {
+                    if let selectedTable = selectedTable.first, !bookedTable.contains(selectedTable) {
+                                        addBookingTable(table: selectedTable, date: date, time: selectedTime, userID: userId, canteenName: canteenData.name)
+                                           }                }, label :{
                     Text("Book table")
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundColor(.white)
@@ -203,44 +229,77 @@ struct TableSelectionView: View {
                 })
             }
             .padding()
+                
         })
+            .navigationBarBackButtonHidden(true) // Hide system back button gesture
+            .onAppear {
+                        // เรียกใช้ fetchBookings เมื่อ view ปรากฏ
+                bookingViewModel.fetchBookings(forUserID: userId)
+                    }
             }
 }
+
 
 struct tableView: View {
     var index: Int
     var table: Int
-    
+    var canteenData: CanteenData
+
+
     @Binding var selectedTable: [Int]
     @Binding var bookedTable: [Int]
-
     
+    
+
     var body: some View {
-        ZStack{
+        ZStack {
             RoundedRectangle(cornerRadius: 8)
-                .stroke(bookedTable.contains(table) ? Color.red : Color.green,lineWidth: 3)
+                .stroke(bookedTable.contains(table) ? Color.red : Color.green, lineWidth: 3)
                 .frame(height: 28)
-//                .background(Color.white) // Set the background color
                 .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(selectedTable.contains(table) ? Color.green : Color.clear)
-                                )
-//            selectedTable.contains(table) > Color.blue : color.clear
+                RoundedRectangle(cornerRadius: 8)
+                .fill(selectedTable.contains(table) ? Color.green : Color.clear)
+                )
             
-            if bookedTable.contains(table){
+            if bookedTable.contains(table) {
                 Image(systemName: "xmark")
                     .foregroundColor(.red)
             }
         }
         .onTapGesture {
-           // Remove previously selected tables
-           selectedTable.removeAll()
+            // Remove previously selected tables
+            selectedTable.removeAll()
 
-           // Add the newly selected table
-           selectedTable.append(table)
-       }    }
+            // Add the newly selected table
+            selectedTable.append(table)
+        }
+    }
 }
 
+
+
+   func addBookingTable(table: Int, date: Date, time: String, userID: String, canteenName: String) {
+       let timestamp = Timestamp(date: date)
+
+       let db = Firestore.firestore()
+       db.collection("Bookings").document().setData([
+           "table": table,
+           "date": timestamp,
+           "time": time,
+           "userID": userID,
+           "canteenName": canteenName
+       ]) { error in
+           if let error = error {
+               print("Error adding booking: \(error.localizedDescription)")
+           } else {
+               print("Booking added successfully!")
+           }
+       }
+   }
+
+
+
 #Preview {
-    TableSelectionView()
+    TableSelectionView(canteenData: CanteenData(name: "Canteen 1", description: "โรงเย็น", images: ["canteen11", "canteen12", "canteen13"], tableCount: 40, rating: "4.8", folderName: "canteen1", time: ["11:25", "11:55", "12:20", "12:45", "13:05", "13:30"], canteenImages: ["canteen11", "canteen12", "canteen13"]), userId: .constant(""))
+
 }

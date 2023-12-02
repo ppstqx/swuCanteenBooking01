@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct swuCanteenBookingApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
+//    init() {
+//        FirebaseApp.configure()
+//    }
     var body: some Scene {
         WindowGroup {
             ContentView()

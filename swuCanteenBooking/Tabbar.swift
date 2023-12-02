@@ -10,20 +10,24 @@ import SwiftUI
 struct Tabbar: View {
     var body: some View {
         TabView  {
-                    HomeView()
-                        .tabItem {
-                            Label("Home", systemImage: "house")
+                HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house")
                         }
 
-                    BookmarkView()
-                        .tabItem {
-                            Label("Favorites", systemImage: "bookmark")
+                BookmarkView()
+                .tabItem {
+                    Label("Favorites", systemImage: "bookmark")
                         }
 
-                    BookingView()
-                        .tabItem {
-                            Label("Booking", systemImage: "list.bullet")
+                BookingView()
+                .tabItem {
+                    Label("Booking", systemImage: "list.clipboard.fill")
                         }
+              ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage:"person.fill")
+                }
                 }
                 .accentColor(.black)   
     }

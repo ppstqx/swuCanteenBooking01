@@ -6,13 +6,27 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct ContentView: View {
+    @AppStorage("uid") var userID: String = ""
+    @State private var isLoggedIn = false
+    
     var body: some View {
-//      Tabbar()
-        TableSelectionView()
+        Group {
+            if isLoggedIn {
+                Tabbar()
+            } else {
+                NavigationView {
+                    AuthView(isLoggedIn: $isLoggedIn, userID: $userID)
+                }
+            }
         }
     }
+}
+
+
 
 
 #Preview {
